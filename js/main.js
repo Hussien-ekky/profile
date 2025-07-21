@@ -1,4 +1,4 @@
-// scroll btn 
+// scroll btn
 const scrollTopBtn = document.querySelector('.scroll-top'); // الحصول على الزر
 
 // إظهار الزر بشكل سلس عند التمرير للأسفل
@@ -28,7 +28,7 @@ window.addEventListener("load", function () {
 
 
 
-// كود العداد 
+// كود العداد
 document.addEventListener("DOMContentLoaded", function () {
     // تحديد جميع العناصر التي نريد تشغيل العداد فيها
     const counters = document.querySelectorAll(".cont");
@@ -63,7 +63,7 @@ function startCounter(counter) {
             clearInterval(interval); // إيقاف العداد عند الوصول للرقم النهائي
         }
         // تنسيق الرقم باستخدام toLocaleString
-        counter.textContent = Math.floor(current).toLocaleString();
+        counter.textContent = '+' + Math.floor(current).toLocaleString();
     }, 16); // 16ms لكل إطار
 }
 
@@ -93,7 +93,7 @@ const swiper = new Swiper('.swiper-section-1', {
     // Enable RTL
     rtl: true, // إجبار الاتجاه على RTL
 
-    // Responsive breakpoints 
+    // Responsive breakpoints
     breakpoints: {
         0: {
             slidesPerView: 1,
@@ -105,4 +105,31 @@ const swiper = new Swiper('.swiper-section-1', {
             slidesPerView: 3,
         },
     }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const form = e.target;
+        const formData = new FormData(form);
+
+        fetch(form.action, {
+            method: 'POST',
+            body: formData
+        })
+            .then(response => {
+                if (response.ok) {
+                    const alert = document.getElementById('success-alert');
+                    alert.classList.remove('d-none');
+                    form.reset();
+                    setTimeout(() => alert.classList.add('d-none'), 5000);
+                } else {
+                    alert('حدث خطأ أثناء الإرسال.');
+                }
+            })
+            .catch(error => {
+                alert('فشل الإرسال: ' + error.message);
+            });
+    });
 });
